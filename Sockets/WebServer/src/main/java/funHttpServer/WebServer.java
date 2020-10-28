@@ -200,7 +200,8 @@ class WebServer {
           Map<String, String> query_pairs = new LinkedHashMap<String, String>();
           // extract path parameters
           query_pairs = splitQuery(request.replace("multiply?", ""));
-
+          Integer num1;
+          Integer num2;
           // extract required fields from parameters
           try {
             Integer num1 = Integer.parseInt(query_pairs.get("num1"));
@@ -213,18 +214,16 @@ class WebServer {
             builder.append("Must specify numbers for num1 and num2.");
           }
 
-          // do math
-          Integer result = num1 * num2;
+          if (num1 != null && num2 != null) {
+            // do math
+            Integer result = num1 * num2;
 
-          // Generate response
-          builder.append("HTTP/1.1 200 OK\n");
-          builder.append("Content-Type: text/html; charset=utf-8\n");
-          builder.append("\n");
-          builder.append("Result is: " + result);
-
-          // TODO: Include error handling here with a correct error code and
-          // a response that makes sense
-
+            // Generate response
+            builder.append("HTTP/1.1 200 OK\n");
+            builder.append("Content-Type: text/html; charset=utf-8\n");
+            builder.append("\n");
+            builder.append("Result is: " + result);
+          }
         } else if (request.contains("github?")) {
           // pulls the query from the request and runs it with GitHub's REST API
           // check out https://docs.github.com/rest/reference/
